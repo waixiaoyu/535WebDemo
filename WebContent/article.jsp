@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <!-- saved from url=(0041)http://v3.bootcss.com/examples/jumbotron/ -->
 <html lang="en">
@@ -32,9 +34,9 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="./topic.html">Topic</a></li>
-					<li><a href="./word.html">Word</a></li>
-					<li class="active"><a href="./article.html">Article</a></li>
+					<li><a href="./topic.jsp">Topic</a></li>
+					<li><a href="./word.jsp">Word</a></li>
+					<li class="active"><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
 					<a class="navbar-brand" href="#"> More detail in</a>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -75,49 +77,8 @@
 		</div>
 	</div>
 	<div class="container">
-		<!-- Example row of columns -->
-		<div class="row">
-			<div class="col-md-4">
-				<h2>Topics Distribution</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce
-					dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-					ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-					magna mollis euismod. Donec sed odio dui.</p>
-				<p>
-					<a class="btn btn-default"
-						href="http://v3.bootcss.com/examples/jumbotron/#" role="button">View
-						details »</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>Words Distribution</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce
-					dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-					ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-					magna mollis euismod. Donec sed odio dui.</p>
-				<p>
-					<a class="btn btn-default"
-						href="http://v3.bootcss.com/examples/jumbotron/#" role="button">View
-						details »</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>Articles Distribution</h2>
-				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-					egestas eget quam. Vestibulum id ligula porta felis euismod semper.
-					Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
-					nibh, ut fermentum massa justo sit amet risus.</p>
-				<p>
-					<a class="btn btn-default"
-						href="http://v3.bootcss.com/examples/jumbotron/#" role="button">View
-						details »</a>
-				</p>
-			</div>
-		</div>
-		<hr>
-		<footer> </footer>
+		<%@include file="bottom_part.jsp"%>
 	</div>
-	<!-- /container -->
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->

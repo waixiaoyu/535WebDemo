@@ -32,9 +32,9 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="./topic.html">Topic</a></li>
-				<li><a href="./word.html">Word</a></li>
-				<li class="active"><a href="./article.html">Article</a></li>
+				<li><a href="./topic.jsp">Topic</a></li>
+				<li><a href="./word.jsp">Word</a></li>
+				<li class="active"><a href="./article.jsp">Article</a></li>
 				<li>hidden element</li>
 				<a class="navbar-brand" href="#"> More detail in</a>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
