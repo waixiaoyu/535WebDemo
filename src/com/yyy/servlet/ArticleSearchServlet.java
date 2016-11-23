@@ -1,10 +1,12 @@
 package com.yyy.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
 
 import com.yyy.dao.HBaseDAO;
+import com.yyy.model.IndexProb;
 
 /**
  * Servlet implementation class ArticleSearch
@@ -23,6 +27,9 @@ import com.yyy.dao.HBaseDAO;
 @WebServlet("/articleSearch")
 public class ArticleSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final double MIN_PR = 0.01;
+	private static final String TOPIC_TABLENAME = "ARTICLE_TOPIC";
+	private static final String CONTENT_TABLENAME = "ARTICLE_ALIAS_TITLE_CONTENT";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -38,23 +45,50 @@ public class ArticleSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 
-		String search = request.getParameter("search");
+		String title = request.getParameter("search");
 		String index = request.getParameter("index");
+		List<IndexProb> topics = getTopic(index);
 
-		System.out.println(search + "-" + index);
-		request.setAttribute("title", search);
+		List<String> topicIndex = new ArrayList<>();
+		List<String> topicPr = new ArrayList<>();
+		for (IndexProb topic : topics) {
+			if (topic.getProb() > MIN_PR) {
+				topicIndex.add(topic.getIndex());
+				topicPr.add(String.valueOf(topic.getProb()).substring(0, 5));
+			}
+		}
 
-		Result result = HBaseDAO.get("ARTICLE_TOPIC", index);
+		// set article title and content
+		request.setAttribute("title", title);
+		request.setAttribute("content", getContent(index));
+		// set topicIndex and Pr
+		request.setAttribute("topicIndex", topicIndex);
+		request.setAttribute("topicPr", topicPr);
+
+		request.getRequestDispatcher("article_search.jsp").forward(request, response);
+	}
+
+	private List<IndexProb> getTopic(String index) throws IOException {
+		List<IndexProb> topics = new ArrayList<IndexProb>();
+
+		Result result = HBaseDAO.get(TOPIC_TABLENAME, index);
 		NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("topic".getBytes());
 		Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
 		for (Entry<byte[], byte[]> entry : set) {
 			System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
+			topics.add(new IndexProb(new String(entry.getKey()), new String(entry.getValue())));
 		}
-		// request.getRequestDispatcher("article_search.jsp").forward(request,
-		// response);
+		Collections.sort(topics);
+		return topics;
+	}
+
+	private String getContent(String index) throws IOException {
+		Result result = HBaseDAO.get(CONTENT_TABLENAME, index);
+		Cell cell = result.getColumnLatestCell("article".getBytes(), "content".getBytes());
+		System.out.println(new String(CellUtil.cloneValue(cell)));
+		return new String(CellUtil.cloneValue(cell));
 	}
 
 	/**

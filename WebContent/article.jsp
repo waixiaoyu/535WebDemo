@@ -86,29 +86,29 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="./js/Bootstrap-3-Typeahead-master/bootstrap3-typeahead.js"></script>
 	<script type="text/javascript">
-    $.get('data/title-id.json', function(data) {
-        $("#search").typeahead({
-            source: data
-        });
-    }, 'json');
+		$.get('data/title-id.json', function(data) {
+			$("#search").typeahead({
+				source : data
+			});
+		}, 'json');
 
-    var $input = $('#search');
-    $input.change(function() {
-        var current = $input.typeahead("getActive");
-        //alert(current.index)
-        if (current) {
-            document.getElementById("index").value = current.index;
-            if (current.name == $input.val()) {
-                // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
-            } else {
-                // This means it is only a partial match, you can either add a new item 
-                // or take the active if you don't want new items
-            }
-        } else {
-            // Nothing is active so it is a new value (or maybe empty value)
-        }
-    });
-    </script>
+		var $input = $('#search');
+		$input.change(function() {
+			var current = $input.typeahead("getActive");
+			//alert(current.index)
+			if (current) {
+				document.getElementById("index").value = current.index;
+				if (current.name == $input.val()) {
+					// This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+				} else {
+					// This means it is only a partial match, you can either add a new item 
+					// or take the active if you don't want new items
+				}
+			} else {
+				// Nothing is active so it is a new value (or maybe empty value)
+			}
+		});
+	</script>
 </body>
 
 </html>

@@ -19,7 +19,6 @@ public class HBaseUtils {
 	private static Configuration conf = null;
 	private static Connection conn = null;
 
-	
 	public static void main(String[] args) throws IOException {
 		getHConnection();
 		List<Result> l = HBaseDAO.scanRowKeyByFilter("table", null);
@@ -27,6 +26,7 @@ public class HBaseUtils {
 			System.out.println(new String(result.getRow()));
 		}
 	}
+
 	/**
 	 * 获取全局唯一的Configuration实例
 	 * 
@@ -62,5 +62,17 @@ public class HBaseUtils {
 		}
 		System.out.println("Hbase 连接成功!");
 		return conn;
+	}
+
+	/**
+	 * 用于提前加载，防止卡顿
+	 */
+	public static void init() {
+		getHConnection();
+		if (conn != null) {
+			System.out.println("hbase conn init success");
+		} else {
+			System.out.println("hbase conn init fail");
+		}
 	}
 }

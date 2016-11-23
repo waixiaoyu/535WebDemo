@@ -9,6 +9,7 @@ import java.util.NavigableMap;
 import java.util.Set;
 
 import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.MasterNotRunningException;
@@ -32,24 +33,44 @@ import org.apache.hadoop.hbase.filter.ValueFilter;
 public class HBaseDAO {
 	private static HBaseAdmin hBaseAdmin = null;
 	static {
-		try {
-			hBaseAdmin = (HBaseAdmin) HBaseUtils.getHConnection().getAdmin();
-			if (hBaseAdmin == null) {
-				throw new Exception("get connection fail");
+		if (hBaseAdmin == null) {
+			try {
+				hBaseAdmin = (HBaseAdmin) HBaseUtils.getHConnection().getAdmin();
+				if (hBaseAdmin == null) {
+					throw new Exception("get connection fail");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
-		Result result = HBaseDAO.get("ARTICLE_TOPIC", "1");
-		NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("topic".getBytes());
-		Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
-		for (Entry<byte[], byte[]> entry : set) {
-			System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
+//		Result result = HBaseDAO.get("ARTICLE_TOPIC", "1");
+//		NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("topic".getBytes());
+//		Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
+//		for (Entry<byte[], byte[]> entry : set) {
+//			System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
+//		}
+		Result result=HBaseDAO.get("ID_WORD", "22222");
+		System.out.println(new String(CellUtil.cloneValue(result.getColumnLatestCell("word".getBytes(), null))));
+	}
+
+	public static void init() {
+		if (hBaseAdmin == null) {
+			try {
+				hBaseAdmin = (HBaseAdmin) HBaseUtils.getHConnection().getAdmin();
+				if (hBaseAdmin == null) {
+					throw new Exception("get connection fail");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("hbase dao init success");
 		}
 	}
 
