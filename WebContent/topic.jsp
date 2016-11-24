@@ -63,15 +63,22 @@
 			</h1>
 			<p>You can input some key words about topic, and see more related
 				articles!</p>
-			<form id="searchform" class="navbar-form  " role="search"
-				target="_blank" method="get" action="/Search/Index">
-				<div class="form-group form-group-lg">
-					<input type="text" id="search" name="search" class="form-control"
-						data-provide="typeahead" autocomplete="off"
-						placeholder="Searching Words">
+			<form id="searchform" role="search" method="post"
+				action="articleSearch">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-group-lg">
+							<input type="text" id="search" name="search" class="form-control"
+								data-provide="typeahead" autocomplete="off"
+								placeholder="Searching Words">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="submit" class="btn btn-primary btn-lg "
+							id="searchbtn">Search</button>
+					</div>
 				</div>
-				<button type="submit" class="btn btn-primary btn-lg" id="searchbtn">
-					Search</button>
+				<input type="text" id="index" name="index" hidden="true">
 			</form>
 		</div>
 	</div>

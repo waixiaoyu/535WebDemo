@@ -63,40 +63,43 @@
 			</h1>
 			<p>You can input some words of titles, and see more related
 				information about its article!</p>
-			<form id="searchform" class="navbar-form  " role="search"
-				method="post" action="articleSearch">
-				<div class="form-group form-group-lg">
-					<input type="text" id="search" name="search" class="form-control"
-						data-provide="typeahead" autocomplete="off"
-						placeholder="Searching Words">
+			<form id="searchform" role="search" method="post"
+				action="articleSearch">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-group-lg">
+							<input type="text" id="search" name="search" class="form-control"
+								data-provide="typeahead" autocomplete="off"
+								placeholder="Searching Words">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="submit" class="btn btn-primary btn-lg "
+							id="searchbtn">Search</button>
+					</div>
 				</div>
 				<input type="text" id="index" name="index" hidden="true">
-				<button type="submit" class="btn btn-primary btn-lg" id="searchbtn">
-					Search</button>
 			</form>
 		</div>
 	</div>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h2>${title}</h2>
-				<p>${content }</p>
-
+		<div class="col-md-12">
+			<a class="list-group-item active">
+				<h4 class="list-group-item-heading">${title}</h4>
+			</a> <a class="list-group-item">
+				<p class="list-group-item-text">${content }</p>
+			</a> <div class="list-group-item">
+				<div class="btn-group" data-toggle="buttons">
+					<form id="topicdetailform" action="topicDetail" method="post">
+						<input type="text" id="topicindex" name="topicindex" value=""
+							hidden="true">
+					</form>
+				</div>
 			</div>
 		</div>
-			<div class="btn-group" data-toggle="buttons">
-			<form id="topicdetailform" action="topicDetail" method="post">
-				<input type="text" id="topicindex" name="topicindex" value=""
-					hidden="true">
-			</form>
-			</div>
+
 		<hr>
 		<footer> </footer>
-		<p>
-			<a class="btn btn-default"
-				href="http://v3.bootcss.com/examples/jumbotron/#" role="button">View
-				details »</a>
-		</p>
 	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -133,7 +136,7 @@
 			var pr = ${topicPr}
 
 			for (var i = 0; i < index.length; i++) {
-				var btn = $("<button type='submit' class='btn btn-primary' id='Btn"+i+"' onclick='change("+index[i]+")'>Topic "+index[i]+": "+pr[i]+"</button>");
+				var btn = $("<div class='col-md-3'><button type='submit' class='btn btn-primary' id='Btn"+i+"' onclick='change("+index[i]+")'>Topic "+index[i]+": "+pr[i]+"</button></div>");
 				$("#topicdetailform").append(btn);
 	
 			}

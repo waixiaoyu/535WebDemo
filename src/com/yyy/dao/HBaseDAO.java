@@ -23,6 +23,9 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
+
+import com.yyy.model.IndexProb;
+
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.filter.RegexStringComparator;
@@ -48,14 +51,28 @@ public class HBaseDAO {
 	}
 
 	public static void main(String[] args) throws IOException {
-//		Result result = HBaseDAO.get("ARTICLE_TOPIC", "1");
-//		NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("topic".getBytes());
-//		Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
-//		for (Entry<byte[], byte[]> entry : set) {
-//			System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
-//		}
-		Result result=HBaseDAO.get("ID_WORD", "22222");
-		System.out.println(new String(CellUtil.cloneValue(result.getColumnLatestCell("word".getBytes(), null))));
+		// Result result = HBaseDAO.get("ARTICLE_TOPIC", "1");
+		// NavigableMap<byte[], byte[]> navigableMap =
+		// result.getFamilyMap("topic".getBytes());
+		// Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
+		// for (Entry<byte[], byte[]> entry : set) {
+		// System.out.println(new String(entry.getKey()) + "-" + new
+		// String(entry.getValue()));
+		// }
+		List<Result> results = HBaseDAO.scanRowKeyByFilter("TOPIC_WORD", null);
+		for (int i = 0; i < results.size(); i++) {
+			Result result=results.get(i);
+			Cell cell = result.getColumnLatestCell("word".getBytes(), "30892".getBytes());
+			if (cell != null) {
+				System.out.println(new String(result.getRow())+"-"+new String(CellUtil.cloneValue(cell)));
+				NavigableMap<byte[], byte[]> navigableMap = results.get(0).getFamilyMap("word".getBytes());
+				Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
+				for (Entry<byte[], byte[]> entry : set) {
+					System.out.println(new String(result.getRow()) + "-" + new String(entry.getKey()) + "-"
+							+ new String(entry.getValue()));
+				}
+			}
+		}
 	}
 
 	public static void init() {

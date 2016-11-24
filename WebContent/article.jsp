@@ -63,16 +63,22 @@
 			</h1>
 			<p>You can input some words of titles, and see more related
 				information about its article!</p>
-			<form id="searchform" class="navbar-form  " role="search"
-				method="post" action="articleSearch">
-				<div class="form-group form-group-lg">
-					<input type="text" id="search" name="search" class="form-control"
-						data-provide="typeahead" autocomplete="off"
-						placeholder="Searching Words">
+			<form id="searchform" role="search" method="post"
+				action="articleSearch">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-group-lg">
+							<input type="text" id="search" name="search" class="form-control"
+								data-provide="typeahead" autocomplete="off"
+								placeholder="Searching Words">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="submit" class="btn btn-primary btn-lg "
+							id="searchbtn">Search</button>
+					</div>
 				</div>
 				<input type="text" id="index" name="index" hidden="true">
-				<button type="submit" class="btn btn-primary btn-lg" id="searchbtn">
-					Search</button>
 			</form>
 		</div>
 	</div>

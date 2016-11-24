@@ -72,21 +72,24 @@
 			</h1>
 			<p>You can input some key words, and see some related topic!</p>
 
-			<form id="searchform" class="navbar-form  " role="search"
-				target="_blank" method="get" action="/Search/Index">
-
-				<div class="form-group form-group-lg">
-					<input type="text" id="search" name="search" class="form-control"
-						data-provide="typeahead" autocomplete="off"
-						placeholder="Searching Words">
+			<form id="searchform" role="search" method="post"
+				action="wordSearch">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-group-lg">
+							<input type="text" id="search" name="search" class="form-control"
+								data-provide="typeahead" autocomplete="off"
+								placeholder="Searching Words">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="submit" class="btn btn-primary btn-lg "
+							id="searchbtn">Search</button>
+					</div>
 				</div>
-
-				<button type="submit" class="btn btn-primary btn-lg" id="searchbtn">
-					Search</button>
+				<input type="text" id="index" name="index" hidden="true">
 			</form>
-
 		</div>
-
 	</div>
 	<div class="container">
 		<%@include file="bottom_part.jsp"%>
@@ -107,11 +110,10 @@
 	var $input = $('#search');
 	$input.change(function() {
 		var current = $input.typeahead("getActive");
-		alert(current.name)
 		if (current) {
 	    // Some item from your model is active!
 	    if (current.name == $input.val()) {
-	            // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+	    	document.getElementById("index").value = current.index;
 	        } else {
 	            // This means it is only a partial match, you can either add a new item 
 	            // or take the active if you don't want new items
