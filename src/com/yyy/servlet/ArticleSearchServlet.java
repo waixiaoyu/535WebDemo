@@ -62,6 +62,7 @@ public class ArticleSearchServlet extends HttpServlet {
 
 		// set article title and content
 		request.setAttribute("title", title);
+		System.out.println(title);
 		request.setAttribute("content", getContent(index));
 		// set topicIndex and Pr
 		request.setAttribute("topicIndex", topicIndex);
@@ -77,7 +78,7 @@ public class ArticleSearchServlet extends HttpServlet {
 		NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("topic".getBytes());
 		Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
 		for (Entry<byte[], byte[]> entry : set) {
-			System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
+			//System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
 			topics.add(new IndexProb(new String(entry.getKey()), new String(entry.getValue())));
 		}
 		Collections.sort(topics);

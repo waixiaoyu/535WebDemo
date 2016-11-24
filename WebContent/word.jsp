@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body id="body">
 
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -72,19 +72,18 @@
 			</h1>
 			<p>You can input some key words, and see some related topic!</p>
 
-			<form id="searchform" role="search" method="post"
-				action="wordSearch">
+			<form id="searchform" role="search" method="post" action="wordSearch">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-group-lg">
 							<input type="text" id="search" name="search" class="form-control"
-								data-provide="typeahead" autocomplete="off"
+						    required oninvalid="setCustomValidity('Please input some key words!');" oninput="setCustomValidity('');" data-provide="typeahead" autocomplete="off"
 								placeholder="Searching Words">
 						</div>
 					</div>
 					<div class="col-md-2">
 						<button type="submit" class="btn btn-primary btn-lg "
-							id="searchbtn">Search</button>
+							id="searchbtn" onclick="showspin()">Search</button>
 					</div>
 				</div>
 				<input type="text" id="index" name="index" hidden="true">
@@ -94,35 +93,39 @@
 	<div class="container">
 		<%@include file="bottom_part.jsp"%>
 	</div>
+
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/Bootstrap-3-Typeahead-master/bootstrap3-typeahead.js"></script>
+	<script src="js/spin.js"></script>
+	<script src="js/showspin.js"></script>
+
 	<script type="text/javascript">
+		$.get('data/word-id.json', function(data) {
+			$("#search").typeahead({
+				source : data
+			});
+		}, 'json');
 
-
-	$.get('data/word-id.json', function(data){
-		$("#search").typeahead({ source:data });
-	},'json');
-
-	var $input = $('#search');
-	$input.change(function() {
-		var current = $input.typeahead("getActive");
-		if (current) {
-	    // Some item from your model is active!
-	    if (current.name == $input.val()) {
-	    	document.getElementById("index").value = current.index;
-	        } else {
-	            // This means it is only a partial match, you can either add a new item 
-	            // or take the active if you don't want new items
-	        }
-	    } else {
-	        // Nothing is active so it is a new value (or maybe empty value)
-	    }
-	});
-</script>
+		var $input = $('#search');
+		$input.change(function() {
+			var current = $input.typeahead("getActive");
+			if (current) {
+				// Some item from your model is active!
+				if (current.name == $input.val()) {
+					document.getElementById("index").value = current.index;
+				} else {
+					// This means it is only a partial match, you can either add a new item 
+					// or take the active if you don't want new items
+				}
+			} else {
+				// Nothing is active so it is a new value (or maybe empty value)
+			}
+		});
+	</script>
 
 </body>
 </html>

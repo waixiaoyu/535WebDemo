@@ -35,8 +35,8 @@
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="./topic.jsp">Topic</a></li>
-					<li><a href="./word.jsp">Word</a></li>
-					<li class="active"><a href="./article.jsp">Article</a></li>
+					<li class="active"><a href="./word.jsp">Word</a></li>
+					<li><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
 					<a class="navbar-brand" href="#"> More detail in</a>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -64,7 +64,7 @@
 			<p>You can input some words of titles, and see more related
 				information about its article!</p>
 			<form id="searchform" role="search" method="post"
-				action="articleSearch">
+				action="wordSearch">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-group-lg">
@@ -83,19 +83,16 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="col-md-12">
-			<a class="list-group-item active">
-				<h4 class="list-group-item-heading">${title}</h4>
-			</a> <a class="list-group-item">
+
+		<a class="list-group-item active">
+			<h4 class="list-group-item-heading">Your input word is "${inputWord}", ${topicSentence }</h4>
+		</a>
+		<hr style='height: 2px; border: none; border-top: 2px dotted #185598;' />
+		<div class="col-md-12" id="wordcontent">
+
+			<!--<a class="list-group-item">
 				<p class="list-group-item-text">${content }</p>
-			</a> <div class="list-group-item">
-				<div class="btn-group" data-toggle="buttons">
-					<form id="topicdetailform" action="topicDetail" method="post">
-						<input type="text" id="topicindex" name="topicindex" value=""
-							hidden="true">
-					</form>
-				</div>
-			</div>
+			</a>-->
 		</div>
 
 		<hr>
@@ -107,10 +104,10 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="./js/Bootstrap-3-Typeahead-master/bootstrap3-typeahead.js"></script>
-	<script src="js/showspin.js"></script>
 	<script src="js/spin.js"></script>
+	<script src="js/showspin.js"></script>
 	<script type="text/javascript">
-		$.get('data/title-id.json', function(data) {
+		$.get('data/word-id.json', function(data) {
 			$("#search").typeahead({
 				source : data
 			});
@@ -132,22 +129,25 @@
 				// Nothing is active so it is a new value (or maybe empty value)
 			}
 		});
-		$(function() {
-
-			var index = ${topicIndex}
-			var pr = ${topicPr}
-
-			for (var i = 0; i < index.length; i++) {
-				var btn = $("<div class='col-md-3'><button type='submit' class='btn btn-primary' id='Btn"+i+"' onclick='change("+index[i]+")'>Topic "+index[i]+": "+pr[i]+"</button></div>");
-				$("#topicdetailform").append(btn);
-	
-			}
-		});
-		
-		function change(value){  
-			$("#topicindex").val(value)
-			$("#topicdetailform").submit()
-		}  
+		var topicNumber=${topicNumber}
+		if(topicNumber>0)
+			{
+		$.get('word_search.json', function(data) {
+			$.each(data, function(infoIndex, info) {
+				var index = info["index"];
+				var head = $("<a class='list-group-item active'><h4 class='list-group-item-heading'>Topic "+index+"</h4></a>");
+				$("#wordcontent").append(head);
+				var value_string="";
+				for (i in info["value"]) {
+					value_string+=info["value"][i].word+", "
+				}
+				value_string=value_string.substr(0,value_string.length-2);
+				var content = $("<a class='list-group-item'><p class='list-group-item-text'>"+value_string+"</p></a>");
+				$("#wordcontent").append(content);
+				var hr = $("<hr style=' height:2px;border:none;border-top:2px solid #185598;' />");
+				$("#wordcontent").append(hr);
+			})
+		}, 'json');}
 	</script>
 </body>
 

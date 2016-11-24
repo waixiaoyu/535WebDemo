@@ -50,43 +50,31 @@ public class WordSearchServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		WEBCONTENT_PATH=request.getSession().getServletContext().getRealPath("");
-		
+
+		WEBCONTENT_PATH = request.getSession().getServletContext().getRealPath("");
+
+		String strWordSearchPath = WEBCONTENT_PATH + File.separatorChar + "word_search.json";
+
+		deleteWordSearchJson(strWordSearchPath);
+
 		String index = request.getParameter("index");
-		System.out.println(index);
+		// System.out.println(index);
 		List<String> listTopicIndex = new ArrayList<>();
 		List<List<IndexProb>> lists = getTopicWordPr(index, listTopicIndex);
-		System.out.println(lists);
+		// System.out.println(lists);
+		createWordSearchJson(listTopicIndex, lists, strWordSearchPath);
 
-		JSONArray jArray = new JSONArray();
-		for (int i = 0; i < listTopicIndex.size(); i++) {
-			JSONObject jObj = new JSONObject();
-			jObj.put("index", listTopicIndex.get(i));
-			JSONArray jArrayIndexProb = new JSONArray();
-			for (IndexProb ip : lists.get(i)) {
-				JSONObject jObjIndexProb = new JSONObject();
-				jObjIndexProb.put("word", ip.getIndex());
-				jObjIndexProb.put("pr", ip.getProb());
-				jArrayIndexProb.put(jObjIndexProb);
-			}
-			jObj.put("value", jArrayIndexProb);
-			jArray.put(jObj);
+		// get search word from id
+		Cell cell = HBaseDAO.get("ID_WORD", new String(index)).getColumnLatestCell("word".getBytes(), null);
+		request.setAttribute("inputWord", new String(CellUtil.cloneValue(cell)));
+		if (listTopicIndex.size() > 1) {
+			request.setAttribute("topicSentence", "it belongs to " + listTopicIndex.size() + " topics.");
+		} else if (listTopicIndex.size() == 1) {
+			request.setAttribute("topicSentence", "it belongs to " + listTopicIndex.size() + " topic.");
+		} else {
+			request.setAttribute("topicSentence", "but it does NOT belong to any topic.");
 		}
-		System.out.println(WEBCONTENT_PATH);
-		JsonUtils.write(jArray.toString(), WEBCONTENT_PATH + File.separatorChar + "word_search.json");
-
-		List<String> word = new ArrayList<>();
-		List<String> pr = new ArrayList<>();
-		for (List<IndexProb> list : lists) {
-			for (IndexProb w : list) {
-				word.add(w.getIndex());
-				pr.add(String.valueOf(w.getProb()).substring(0, 6));
-			}
-		}
-		request.setAttribute("topicIndex", listTopicIndex);
-		request.setAttribute("word", word);
-		request.setAttribute("pr", pr);
+		request.setAttribute("topicNumber", listTopicIndex.size());
 
 		request.getRequestDispatcher("word_search.jsp").forward(request, response);
 
@@ -101,7 +89,7 @@ public class WordSearchServlet extends HttpServlet {
 			Cell cell = result.getColumnLatestCell("word".getBytes(), index.getBytes());
 			if (cell != null) {
 				listIndex.add(new String(result.getRow()));
-				NavigableMap<byte[], byte[]> navigableMap = results.get(0).getFamilyMap("word".getBytes());
+				NavigableMap<byte[], byte[]> navigableMap = results.get(i).getFamilyMap("word".getBytes());
 				Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
 				List<IndexProb> list = new ArrayList<>();
 				for (Entry<byte[], byte[]> entry : set) {
@@ -114,6 +102,39 @@ public class WordSearchServlet extends HttpServlet {
 			}
 		}
 		return lists;
+	}
+
+	/**
+	 * delete before next request, otherwise if there is no new data, it will
+	 * read old json.
+	 */
+	private void deleteWordSearchJson(String path) {
+		File f = new File(path);
+		if (f.exists()) {
+			f.delete();
+			//System.out.println("word_search.json deleted");
+		} else {
+			//System.out.println("word_search.json not exist");
+		}
+	}
+
+	private void createWordSearchJson(List<String> listTopicIndex, List<List<IndexProb>> lists, String path) {
+		JSONArray jArray = new JSONArray();
+		for (int i = 0; i < listTopicIndex.size(); i++) {
+			JSONObject jObj = new JSONObject();
+			jObj.put("index", listTopicIndex.get(i));
+			JSONArray jArrayIndexProb = new JSONArray();
+			for (IndexProb ip : lists.get(i)) {
+				JSONObject jObjIndexProb = new JSONObject();
+				jObjIndexProb.put("word", ip.getIndex());
+				jObjIndexProb.put("pr", ip.getProb());
+				jArrayIndexProb.put(jObjIndexProb);
+			}
+			jObj.put("value", jArrayIndexProb);
+			jArray.put(jObj);
+		}
+		// System.out.println(WEBCONTENT_PATH);
+		JsonUtils.write(jArray.toString(), path);
 	}
 
 	/**

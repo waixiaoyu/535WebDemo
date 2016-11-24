@@ -24,7 +24,7 @@
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false" 
 					aria-controls="navbar">
 					<span class="sr-only">Toggle navigation</span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
@@ -68,7 +68,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-group-lg">
-							<input type="text" id="search" name="search" class="form-control"
+							<input type="text" id="search" name="search" class="form-control"  required="required"
 								data-provide="typeahead" autocomplete="off"
 								placeholder="Searching Words">
 						</div>

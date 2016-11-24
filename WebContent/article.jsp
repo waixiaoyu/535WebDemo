@@ -18,7 +18,7 @@
 <link href="css/jumbotron.css" rel="stylesheet">
 </head>
 
-<body>
+<body id="body">
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -68,14 +68,14 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-group-lg">
-							<input type="text" id="search" name="search" class="form-control"
+							<input type="text" id="search" name="search" class="form-control" required oninvalid="setCustomValidity('Please input some key words!');" oninput="setCustomValidity('');"
 								data-provide="typeahead" autocomplete="off"
 								placeholder="Searching Words">
 						</div>
 					</div>
 					<div class="col-md-2">
 						<button type="submit" class="btn btn-primary btn-lg "
-							id="searchbtn">Search</button>
+							id="searchbtn" onclick="showspin()">Search</button>
 					</div>
 				</div>
 				<input type="text" id="index" name="index" hidden="true">
@@ -91,6 +91,8 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="./js/Bootstrap-3-Typeahead-master/bootstrap3-typeahead.js"></script>
+	<script src="js/spin.js"></script>
+	<script src="js/showspin.js"></script>
 	<script type="text/javascript">
 		$.get('data/title-id.json', function(data) {
 			$("#search").typeahead({
