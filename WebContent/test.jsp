@@ -51,7 +51,7 @@
 	
 	<div class="container">
 		<div class="col-md-12">
-			<a class="list-group-item active">
+			<a href="#" class="list-group-item active">
 				<h4 class="list-group-item-heading">title</h4>
 			</a> <a class="list-group-item">
 				<p class="list-group-item-text">content</p>
