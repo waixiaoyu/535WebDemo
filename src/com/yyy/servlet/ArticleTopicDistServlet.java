@@ -42,7 +42,7 @@ public class ArticleTopicDistServlet extends HttpServlet {
 		atjson.create(index, WEBCONTENT_PATH + File.separator + "data" + File.separator + strJsonFileName);
 
 		request.setAttribute("index", index);
-		request.setAttribute("jsonfilepath", "data" + File.separator + strJsonFileName);
+		request.setAttribute("filepath", "data" + File.separator + strJsonFileName);
 		request.getRequestDispatcher("article_topic_dist.jsp").forward(request, response);
 
 	}

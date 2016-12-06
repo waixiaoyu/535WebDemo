@@ -1,5 +1,6 @@
 package com.yyy.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,8 @@ import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
 
 import com.yyy.dao.HBaseDAO;
+import com.yyy.json.ARTICLE_TOPIC20Json;
+import com.yyy.json.TOPIC_WORD100tsv;
 import com.yyy.model.IndexProb;
 
 /**
@@ -26,8 +29,7 @@ import com.yyy.model.IndexProb;
 @WebServlet("/topicDetail")
 public class TopicDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private static final String TABLENAME = "TOPIC_WORD";
+	private static String WEBCONTENT_PATH = "";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,40 +44,17 @@ public class TopicDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: " + request.getParameter("topicindex"))
-				.append(request.getContextPath());
-		List<IndexProb> words = getWords(request.getParameter("topicindex"));
+		WEBCONTENT_PATH = request.getSession().getServletContext().getRealPath("");
 
-		List<String> wordIndex = new ArrayList<>();
-		List<String> wordPr = new ArrayList<>();
-		for (IndexProb word : words) {
-			wordIndex.add(word.getIndex());
-			wordPr.add(String.valueOf(word.getProb()).substring(0, 6));
-		}
+		String index = request.getParameter("topicindex");
+		String strJsonFileName = "topic_" + index + "_word100" + ".tsv";
+		// create article_topic json file
+		TOPIC_WORD100tsv twtsv = new TOPIC_WORD100tsv();
+		twtsv.create(index, WEBCONTENT_PATH + File.separator + "data" + File.separator + strJsonFileName);
 
-		// set topicIndex and Pr
-		request.setAttribute("wordIndex", wordIndex);
-		request.setAttribute("wordPr", wordPr);
+		request.setAttribute("index", index);
+		request.setAttribute("filepath", "data" + File.separator + strJsonFileName);
 		request.getRequestDispatcher("topic_detail.jsp").forward(request, response);
-	}
-
-	private List<IndexProb> getWords(String index) throws IOException {
-		List<IndexProb> words = new ArrayList<IndexProb>();
-
-		Result result = HBaseDAO.get(TABLENAME, index);
-		NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("word".getBytes());
-		Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
-		for (Entry<byte[], byte[]> entry : set) {
-			System.out.println(new String(entry.getKey()) + "-" + new String(entry.getValue()));
-			result = HBaseDAO.get("ID_WORD", new String(entry.getKey()));
-			words.add(
-					new IndexProb(new String(CellUtil.cloneValue(result.getColumnLatestCell("word".getBytes(), null))),
-							new String(entry.getValue())));
-		}
-		Collections.sort(words);
-		return words;
-
 	}
 
 	/**

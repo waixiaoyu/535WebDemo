@@ -91,7 +91,7 @@
 	$.get('topic_list.json', function(data) {
 		$.each(data, function(infoIndex, info) {
 			var index = info["index"];
-			var head = $("<a class='list-group-item active'><h4 class='list-group-item-heading'>Topic "+index+"</h4></a>");
+			var head = $("<a href='topicDetail?topicindex="+index+"' class='list-group-item active'><h4 class='list-group-item-heading'>Topic "+index+"</h4></a>");
 			$("#topiclist").append(head);
 			var value_string="";
 			for (i in info["value"]) {

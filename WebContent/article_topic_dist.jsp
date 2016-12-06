@@ -61,7 +61,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>
-				<a href="${jsonfilepath }">${index }</a> <br> Article - Topic
+				<a href="${filepath }">${index }</a> <br> Article - Topic
 				Distribution Charts!
 			</h1>
 
