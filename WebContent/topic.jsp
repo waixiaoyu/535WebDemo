@@ -24,7 +24,7 @@
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false" 
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
 					aria-controls="navbar">
 					<span class="sr-only">Toggle navigation</span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
@@ -34,7 +34,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="./topic.jsp">Topic</a></li>
+					<li class="active"><a href="topic">Topic</a></li>
 					<li><a href="./word.jsp">Word</a></li>
 					<li><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
@@ -58,32 +58,25 @@
 	<!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<div class="container">
-			<h1>
-				Welcome to our <br> Documents Analysis Platform!
-			</h1>
-			<p>You can input some key words about topic, and see more related
-				articles!</p>
-			<form id="searchform" role="search" method="post"
-				action="articleSearch">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group form-group-lg">
-							<input type="text" id="search" name="search" class="form-control"  required="required"
-								data-provide="typeahead" autocomplete="off"
-								placeholder="Searching Words">
-						</div>
-					</div>
-					<div class="col-md-2">
-						<button type="submit" class="btn btn-primary btn-lg "
-							id="searchbtn">Search</button>
-					</div>
+			<div class="container">
+
+				<a class="list-group-item active">
+					<h2 class="list-group-item-heading">We have ${topicNumber } topics !<p><p> You can click the title to see detail information about each topic.</h2>
+				</a>
+				<hr
+					style='height: 2px; border: none; border-top: 2px dotted #185598;' />
+				<div class="col-md-12" id="topiclist">
+
+					<!--<a class="list-group-item">
+				<p class="list-group-item-text"></p>
+			</a>-->
 				</div>
-				<input type="text" id="index" name="index" hidden="true">
-			</form>
+
+				<hr>
+				<footer> </footer>
+			</div>
+
 		</div>
-	</div>
-	<div class="container">
-		<%@include file="bottom_part.jsp"%>
 	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -92,27 +85,25 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/Bootstrap-3-Typeahead-master/bootstrap3-typeahead.js"></script>
 	<script type="text/javascript">
-		$.get('collection.json', function(data) {
-			$("#search").typeahead({
-				source : data
-			});
-		}, 'json');
-
-		var $input = $('#search');
-		$input.change(function() {
-			var current = $input.typeahead("getActive");
-			if (current) {
-				// Some item from your model is active!
-				if (current.name == $input.val()) {
-					// This means the exact match is found. Use toLowerCase() if you want case insensitive match.
-				} else {
-					// This means it is only a partial match, you can either add a new item 
-					// or take the active if you don't want new items
-				}
-			} else {
-				// Nothing is active so it is a new value (or maybe empty value)
+	var topicNumber=${topicNumber}
+	if(topicNumber>0)
+		{
+	$.get('topic_list.json', function(data) {
+		$.each(data, function(infoIndex, info) {
+			var index = info["index"];
+			var head = $("<a class='list-group-item active'><h4 class='list-group-item-heading'>Topic "+index+"</h4></a>");
+			$("#topiclist").append(head);
+			var value_string="";
+			for (i in info["value"]) {
+				value_string+=info["value"][i].word+", "
 			}
-		});
+			value_string=value_string.substr(0,value_string.length-2);
+			var content = $("<a class='list-group-item'><p class='list-group-item-text'>Keywords:    "+value_string+"</p></a>");
+			$("#topiclist").append(content);
+			var hr = $("<hr style=' height:2px;border:none;border-top:2px solid #185598;' />");
+			$("#topiclist").append(hr);
+		})
+	}, 'json');}
 	</script>
 </body>
 

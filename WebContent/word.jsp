@@ -40,7 +40,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="./topic.jsp">Topic</a></li>
+					<li><a href="topic">Topic</a></li>
 					<li class="active"><a href="./word.jsp">Word</a></li>
 					<li><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>

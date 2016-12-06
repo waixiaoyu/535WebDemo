@@ -36,7 +36,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="./topic.jsp">Topic</a></li>
+					<li><a href="topic">Topic</a></li>
 					<li><a href="./word.jsp">Word</a></li>
 					<li class="active"><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
@@ -61,8 +61,10 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>
-				${index } <br> Article - Topic Distribution Charts!
+				<a href="${jsonfilepath }">${index }</a> <br> Article - Topic
+				Distribution Charts!
 			</h1>
+
 			<br>
 			<ul id="myTab" class="nav nav-tabs">
 				<li class="active"><a href="#columnChart" data-toggle="tab">

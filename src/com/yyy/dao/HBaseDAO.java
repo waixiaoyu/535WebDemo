@@ -25,6 +25,7 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 
 import com.yyy.model.IndexProb;
+import com.yyy.model.WordProb;
 
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
@@ -51,27 +52,22 @@ public class HBaseDAO {
 	}
 
 	public static void main(String[] args) throws IOException {
-		// Result result = HBaseDAO.get("ARTICLE_TOPIC", "1");
-		// NavigableMap<byte[], byte[]> navigableMap =
-		// result.getFamilyMap("topic".getBytes());
-		// Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
-		// for (Entry<byte[], byte[]> entry : set) {
-		// System.out.println(new String(entry.getKey()) + "-" + new
-		// String(entry.getValue()));
-		// }
-		List<Result> results = HBaseDAO.scanRowKeyByFilter("TOPIC_WORD", null);
+		List<String> listTopicIndex = new ArrayList<>();
+		List<List<WordProb>> listWP = new ArrayList<>();
+		List<Result> results = HBaseDAO.scanRowKeyByFilter("TOPIC_WORD5", null);
 		for (int i = 0; i < results.size(); i++) {
-			Result result=results.get(i);
-			Cell cell = result.getColumnLatestCell("word".getBytes(), "30892".getBytes());
-			if (cell != null) {
-				System.out.println(new String(result.getRow())+"-"+new String(CellUtil.cloneValue(cell)));
-				NavigableMap<byte[], byte[]> navigableMap = results.get(0).getFamilyMap("word".getBytes());
-				Set<Entry<byte[], byte[]>> set = navigableMap.entrySet();
-				for (Entry<byte[], byte[]> entry : set) {
-					System.out.println(new String(result.getRow()) + "-" + new String(entry.getKey()) + "-"
-							+ new String(entry.getValue()));
-				}
+			Result result = results.get(i);
+			listTopicIndex.add(new String(result.getRow()));
+
+			List<WordProb> list = new ArrayList<>();
+			NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("word".getBytes());
+			for (Entry<byte[], byte[]> entry : navigableMap.entrySet()) {
+				result = HBaseDAO.get("ID_WORD", new String(entry.getKey()));
+				String strKey = new String(CellUtil.cloneValue(result.getColumnLatestCell("word".getBytes(), null)));
+				System.out.println(strKey + "-" + new String(entry.getValue()));
+				list.add(new WordProb(strKey, new String(entry.getValue())));
 			}
+			listWP.add(list);
 		}
 	}
 
