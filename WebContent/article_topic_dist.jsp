@@ -18,10 +18,13 @@
 <link href="css/jumbotron.css" rel="stylesheet">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
 </head>
 
 <body id="body">
-	<!-- Fixed navbar -->
+	<!-- Fixed navbar -->    
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -36,7 +39,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="topic">Topic</a></li>
+					<li><a href="./topic.jsp">Topic</a></li>
 					<li><a href="./word.jsp">Word</a></li>
 					<li class="active"><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
@@ -61,22 +64,28 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>
+<<<<<<< HEAD
 				<a href="${filepath }">${index }</a> <br> Article - Topic
 				Distribution Charts!
+=======
+				${index } <br> Article - Topic Distribution Charts!
+>>>>>>> 4d807c9897a404dbc2b770257265dbd9a62461f3
 			</h1>
-
 			<br>
 			<ul id="myTab" class="nav nav-tabs">
 				<li class="active"><a href="#columnChart" data-toggle="tab">
 						Column Chart </a></li>
 				<li><a href="#pieChart" data-toggle="tab">Pie chart</a></li>
 			</ul>
-			<div id="myTabContent" class="tab-content">
+			<div id="myTabContent" class="tab-content" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto;">
 				<div class="tab-pane fade in active" id="columnChart">
 					<p>This is column chart</p>
+					<script type="text/javascript" src="js/columnchart.js"></script>
 				</div>
 				<div class="tab-pane fade" id="pieChart">
-					<p>This is pie chart</p>
+				<!-- <div id="pieChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto;"> -->
+					<!-- <p>This is pie chart</p> -->
+					<script type="text/javascript" src="js/highchart.js"></script>
 				</div>
 			</div>
 		</div>
@@ -84,7 +93,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-
+	
 </body>
 
 </html>
