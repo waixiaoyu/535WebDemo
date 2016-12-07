@@ -1,4 +1,4 @@
-function columnchart(inputJsonFile) {
+function columnchart(inputJsonFile,index) {
     var jsonString = [];
     var jsonStringName = [];
     var jsonStringData = [];
@@ -24,7 +24,7 @@ function columnchart(inputJsonFile) {
         var chart = Highcharts.chart('columnChart', {
 
             title: {
-                text: 'Column Chart of Topic-Article Distribution'
+                text: 'Column Chart of Topic '+index+'-Article Distribution'
             },
 
 
@@ -58,4 +58,3 @@ function listSortBy(arr, field, order){
     return result; 
 }
 
-columnchart('article_1_topic20.json');

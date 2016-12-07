@@ -12,18 +12,20 @@ import com.yyy.dao.HBaseDAO;
 
 public class ARTICLE_TOPIC20Json {
 
-	private static JSONArray jArray = new JSONArray();
+	private static JSONArray jArray = null;
 	public static String tableName = "ARTICLE_TOPIC20";
 
 	public static void main(String[] args) throws IOException {
-
-		String rowKey = "1";
+		String rowKey = "16272";
 		ARTICLE_TOPIC20Json w = new ARTICLE_TOPIC20Json();
 		w.scanHbase(rowKey);
+		jArray = new JSONArray();
 		JsonUtils.write(jArray.toString(), "article_" + rowKey + "_topic20" + ".json");
 	}
 
-	public void create(String rowKey,String outputPath) throws IOException {
+	public void create(String rowKey, String outputPath) throws IOException {
+		jArray = new JSONArray();
+		FSUtils.delete(outputPath);
 		scanHbase(rowKey);
 		JsonUtils.write(jArray.toString(), outputPath);
 	}
@@ -38,7 +40,6 @@ public class ARTICLE_TOPIC20Json {
 		Result r = HBaseDAO.get(tableName, rowKey);
 		NavigableMap<byte[], byte[]> maps = r.getFamilyMap("topic".getBytes());
 		for (Entry<byte[], byte[]> e : maps.entrySet()) {
-			System.out.println(new String(e.getKey()) + "-" + new String(e.getValue()));
 			createJsonObject(new String(e.getKey()), new String(e.getValue()));
 		}
 	}

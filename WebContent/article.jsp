@@ -30,7 +30,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">You can search</a>
+				<a class="navbar-brand" >You can search</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -39,17 +39,8 @@
 					<li class="active"><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
 					<a class="navbar-brand" href="#"> More detail in</a>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Charts <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul></li>
+					<li><a href="#" data-toggle="modal" data-target="#myModal">about us</a></li>
+					<%@include file="about.html"%>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->

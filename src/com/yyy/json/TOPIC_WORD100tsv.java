@@ -29,6 +29,7 @@ public class TOPIC_WORD100tsv {
 	}
 
 	public void create(String rowKey, String outputPath) throws IOException {
+		FSUtils.delete(outputPath);
 		filepath = outputPath;
 		scanHbase(rowKey);
 	}

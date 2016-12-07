@@ -39,7 +39,7 @@ public class ArticleTopicDistServlet extends HttpServlet {
 		String strJsonFileName = "article_" + index + "_topic20" + ".json";
 		// create article_topic json file
 		ARTICLE_TOPIC20Json atjson = new ARTICLE_TOPIC20Json();
-		atjson.create(index, WEBCONTENT_PATH + File.separator + "data" + File.separator + strJsonFileName);
+		atjson.create(index, WEBCONTENT_PATH  + "data" + File.separator + strJsonFileName);
 
 		request.setAttribute("index", index);
 		request.setAttribute("filepath", "data" + File.separator + strJsonFileName);

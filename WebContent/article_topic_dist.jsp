@@ -18,9 +18,8 @@
 <link href="css/jumbotron.css" rel="stylesheet">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/exporting.js"></script>
 </head>
 
 <body id="body">
@@ -35,7 +34,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">You can search</a>
+				<a class="navbar-brand" >You can search</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -44,17 +43,8 @@
 					<li class="active"><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
 					<a class="navbar-brand" href="#"> More detail in</a>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Charts <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul></li>
+					<li><a href="#" data-toggle="modal" data-target="#myModal">about us</a></li>
+					<%@include file="about.html"%>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -64,28 +54,36 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>
-<<<<<<< HEAD
-				<a href="${filepath }">${index }</a> <br> Article - Topic
-				Distribution Charts!
-=======
-				${index } <br> Article - Topic Distribution Charts!
->>>>>>> 4d807c9897a404dbc2b770257265dbd9a62461f3
+				 <br> Article - Topic Distribution Charts!
 			</h1>
+			<p>Article ID:${index }</p>
 			<br>
 			<ul id="myTab" class="nav nav-tabs">
 				<li class="active"><a href="#columnChart" data-toggle="tab">
 						Column Chart </a></li>
 				<li><a href="#pieChart" data-toggle="tab">Pie chart</a></li>
+				<li><a href="#rawData" data-toggle="tab">Raw Data</a></li>	
 			</ul>
 			<div id="myTabContent" class="tab-content" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto;">
 				<div class="tab-pane fade in active" id="columnChart">
-					<p>This is column chart</p>
 					<script type="text/javascript" src="js/columnchart.js"></script>
+					<script type="text/javascript">
+						var id=${index}	
+						columnchart('data/article_'+id+'_topic20.json',id)
+					</script>	
 				</div>
 				<div class="tab-pane fade" id="pieChart">
-				<!-- <div id="pieChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto;"> -->
-					<!-- <p>This is pie chart</p> -->
-					<script type="text/javascript" src="js/highchart.js"></script>
+					<script type="text/javascript" src="js/pieChart.js"></script>
+					<script type="text/javascript">
+						var id=${index}
+						pieChart('data/article_'+id+'_topic20.json',id)
+					</script>	
+				</div>
+				<div class="tab-pane fade" id="rawData">
+					<div class="container">
+						<a href="${filepath }"><button class="btn btn-primary btn-lg ">Click
+								here to download raw data</button></a>
+					</div>
 				</div>
 			</div>
 		</div>

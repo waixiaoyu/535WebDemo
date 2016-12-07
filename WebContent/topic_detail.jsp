@@ -32,7 +32,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">You can search</a>
+				<a class="navbar-brand" >You can search</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -41,17 +41,8 @@
 					<li class="active"><a href="./article.jsp">Article</a></li>
 					<li>hidden element</li>
 					<a class="navbar-brand" href="#"> More detail in</a>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Charts <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul></li>
+					<li><a href="#" data-toggle="modal" data-target="#myModal">about us</a></li>
+					<%@include file="about.html"%>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -71,7 +62,7 @@
 				<li><a href="#columnChart" data-toggle="tab">Column Chart</a></li>
 				<li><a href="#rawData" data-toggle="tab">Raw Data</a></li>
 			</ul>
-			<div id="myTabContent" class="tab-content">
+			<div id="myTabContent" class="tab-content" style="width:900px; margin:0 auto; ">
 				<div class="tab-pane fade in active" id="wordcloudChart">
 					<div class="container">
 						<%@include file="cloud.html"%>
@@ -82,15 +73,18 @@
 						<%@include file="3dcolumn.html"%>
 					</div>
 				</div>
-
 				<div class="tab-pane fade" id="rawData">
 					<div class="container">
-						<a href="${filepath }"><button class="btn btn-primary btn-lg ">Click here to get raw data</button></a>
+						<a href="${filepath }"><button class="btn btn-primary btn-lg ">Click
+								here to download raw data</button></a>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> 
+
+	
+	
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->

@@ -1,4 +1,4 @@
-function highChart(inputJsonFile) {
+function pieChart(inputJsonFile,index) {
     var jsonString = [];
     $.getJSON(inputJsonFile, function(data) {
         for (i = 0; i < data.length; i++) {
@@ -6,11 +6,9 @@ function highChart(inputJsonFile) {
                 name:data[i].name,
                 y:parseFloat(data[i].y)
             };
-            // alert(mydata)
             jsonString.push(mydata);
         }
         var processed_json = jsonString
-        // alert(processed_json)
 
         Highcharts.chart('pieChart', {
             chart: {
@@ -20,7 +18,7 @@ function highChart(inputJsonFile) {
                 type: 'pie'
             },
             title: {
-                text: 'Pie Chart of Topic-Article Distribution'
+                text: 'Pie Chart of Topic '+ index+ '-Article Distribution'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -45,4 +43,3 @@ function highChart(inputJsonFile) {
 
     });
 }
-highChart('article_1_topic20.json');
