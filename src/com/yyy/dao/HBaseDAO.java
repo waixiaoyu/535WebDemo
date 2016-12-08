@@ -52,22 +52,12 @@ public class HBaseDAO {
 	}
 
 	public static void main(String[] args) throws IOException {
-		List<String> listTopicIndex = new ArrayList<>();
-		List<List<WordProb>> listWP = new ArrayList<>();
-		List<Result> results = HBaseDAO.scanRowKeyByFilter("TOPIC_WORD5", null);
-		for (int i = 0; i < results.size(); i++) {
-			Result result = results.get(i);
-			listTopicIndex.add(new String(result.getRow()));
-
-			List<WordProb> list = new ArrayList<>();
-			NavigableMap<byte[], byte[]> navigableMap = result.getFamilyMap("word".getBytes());
-			for (Entry<byte[], byte[]> entry : navigableMap.entrySet()) {
-				result = HBaseDAO.get("ID_WORD", new String(entry.getKey()));
-				String strKey = new String(CellUtil.cloneValue(result.getColumnLatestCell("word".getBytes(), null)));
-				System.out.println(strKey + "-" + new String(entry.getValue()));
-				list.add(new WordProb(strKey, new String(entry.getValue())));
+		List<Result> list = HBaseDAO.scanRowKeyByFilter("ID_WORD", null);
+		for (Result result : list) {
+			List<Cell> cells = result.getColumnCells("word".getBytes(), null);
+			for (Cell c : cells) {
+				System.out.println(new String(result.getRow()) + "-" + new String(CellUtil.cloneValue(c)));
 			}
-			listWP.add(list);
 		}
 	}
 

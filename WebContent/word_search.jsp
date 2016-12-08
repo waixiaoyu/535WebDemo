@@ -53,7 +53,7 @@
 				Welcome to our <br> Documents Analysis Platform!
 			</h1>
 			<p>You can input some words of titles, and see more related
-				information about its article!</p>
+				information about its article! The probabilities of result topics are more than 1%.</p>
 			<form id="searchform" role="search" method="post"
 				action="wordSearch">
 				<div class="row">
