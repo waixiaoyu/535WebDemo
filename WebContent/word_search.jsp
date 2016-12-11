@@ -53,15 +53,17 @@
 				Welcome to our <br> Documents Analysis Platform!
 			</h1>
 			<p>You can input some words of titles, and see more related
-				information about its article! The probabilities of result topics are more than 1%.</p>
-			<form id="searchform" role="search" method="post"
-				action="wordSearch">
+				information about its article! The probabilities of result topics
+				are more than 1%.</p>
+			<form id="searchform" role="search" method="post" action="wordSearch">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group form-group-lg">
-							<input type="text" id="search" name="search" class="form-control"  required oninvalid="setCustomValidity('Please input some key words!');" oninput="setCustomValidity('');"
-								data-provide="typeahead" autocomplete="off"
-								placeholder="Searching Words">
+							<input type="text" id="search" name="search" class="form-control"
+								required
+								oninvalid="setCustomValidity('Please input some key words!');"
+								oninput="setCustomValidity('');" data-provide="typeahead"
+								autocomplete="off" placeholder="Searching Words">
 						</div>
 					</div>
 					<div class="col-md-2">
