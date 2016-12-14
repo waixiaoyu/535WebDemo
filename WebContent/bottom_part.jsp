@@ -27,10 +27,7 @@
 		<div class="row">
 			<div class="col-md-4">
 				<h2>Topics Distribution</h2>
-				<p>Donec id elit non mi porta gravida at eget metus. Fusce
-					dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-					ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-					magna mollis euismod. Donec sed odio dui.</p>
+				<p>This is a topic list and top 10 frequency words under this topic can be shown.</p>
 				<p>
 					<a class="btn btn-default" href="topic" role="button">View
 						details </a>
@@ -38,7 +35,7 @@
 			</div>
 			<div class="col-md-4">
 				<h2>Words Distribution</h2>
-				<p>index=30921 word=oil</p>
+				<p>Given a word query, the related topics which contains the word can be shown. For example, if you input key word "oil", you can see it belongs to 5 topics.</p>
 				<p>
 					<a class="btn btn-default" href="wordSearch?index=30921"
 						role="button">View details </a>
@@ -46,7 +43,7 @@
 			</div>
 			<div class="col-md-4">
 				<h2>Articles Distribution</h2>
-				<p>index=0,title=BAHIA COCOA REVIE</p>
+				<p>Given a title query, the topics which the article might be clustered to can be shown. For example, if you input key word "BAHIA COCOA REVIE", you can see it belongs to 5 topics.</p>
 				<p>
 					<a class="btn btn-default" href="articleSearch?index=0&search=BAHIA COCOA REVIEW"
 						role="button">View details </a>

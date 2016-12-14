@@ -10,7 +10,8 @@
     var div = document.getElementById('word-cloud');
     var width = div.clientWidth,
         height = 550;
-	var filename="data/topic_"+${index}+"_word100.tsv";
+    var fileindex="${index}";
+	var filename="data/topic_"+fileindex+"_word100.tsv";
     var leaderScale = d3.scale.linear().range([20, 70]);
     d3.tsv(filename, function(data) {
         var leaders = data

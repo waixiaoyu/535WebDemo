@@ -47,6 +47,7 @@ public class TopicDetailServlet extends HttpServlet {
 		WEBCONTENT_PATH = request.getSession().getServletContext().getRealPath("");
 
 		String index = request.getParameter("topicindex");
+		index = index.length() == 1 ? "0" + index : index;
 		String strJsonFileName = "topic_" + index + "_word100" + ".tsv";
 		// create article_topic json file
 		TOPIC_WORD100tsv twtsv = new TOPIC_WORD100tsv();

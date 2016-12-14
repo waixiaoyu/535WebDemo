@@ -10,8 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="http://v3.bootcss.com/favicon.ico">
-<title>Demo</title>
+<link rel="icon" href="/535WebDemo/favicon.ico">
+<title>Article Topic Distribution</title>
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->

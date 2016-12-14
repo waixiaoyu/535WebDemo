@@ -12,7 +12,8 @@
 $(function() {
     var category = [],
         prob = [];
-    var filename="data/topic_"+${index}+"_word100.tsv";
+    var fileindex="${index}";
+    var filename="data/topic_"+fileindex+"_word100.tsv";
     d3.tsv(filename, function(data) {
         var leaders = data
             //.filter(function(d) { return +d.prob > 0; })
